@@ -1,18 +1,17 @@
 "use client"
 
-import { ExternalLink } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 
 interface DexButtonProps {
-  link?: string
-  className?: string
+  link?: string;
+  className?: string;
 }
 
 export function DexButton({ link, className }: DexButtonProps) {
   if (!link) {
-    console.warn("⚠️ DexButton link missing for call:", link)
-    return null
+    console.warn("⚠️ DexButton link missing!");
+    return null;
   }
 
   return (
@@ -20,13 +19,9 @@ export function DexButton({ link, className }: DexButtonProps) {
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className={cn(
-        "flex items-center text-sm text-white/80 hover:text-green-400 transition-colors duration-200",
-        className
-      )}
+      className={className}
     >
-      <span className="mr-1">View on Dexscreener</span>
-      <ExternalLink size={14} />
+      View on Dexscreener
     </Link>
-  )
+  );
 } 
