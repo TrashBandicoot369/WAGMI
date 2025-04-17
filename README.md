@@ -75,7 +75,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 
 git add .
-git commit -m "Update: whatever you changed"
+git commit -m "Remove service account key and add to gitignore"
 git push
 
 
