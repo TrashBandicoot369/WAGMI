@@ -37,14 +37,39 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Project Structure
 
-- `app/` - Next.js app directory
-- `components/` - Reusable React components
-- `components/ui/` - UI component library
-- `hooks/` - Custom React hooks
-- `lib/` - Utility functions and shared logic
-- `types/` - TypeScript type definitions
-- `public/` - Static assets
-- `styles/` - Global styles
+```
+/
+├── components/
+│   ├── feed-card.tsx                     # Card component for displaying token data
+│   ├── feed-section.tsx                  # Section that displays the grid of token cards
+│   └── ui/
+│       ├── StatusBadge.tsx               # Component for displaying status indicators
+│       └── DexButton.tsx                 # Button component for DEX links
+│
+├── hooks/
+│   └── useCalls.ts                       # Hook for fetching token call data
+│
+├── lib/
+│   ├── firebase.ts                       # Firebase configuration and initialization
+│   └── utils.ts                          # Utility functions including formatDate
+│
+├── types/
+│   └── index.ts                          # TypeScript interfaces including TokenData
+│
+├── public/                               # Static files
+│
+├── pages/
+│   ├── _app.tsx                          # Next.js app wrapper
+│   └── index.tsx                         # Main landing page
+│
+├── styles/
+│   └── globals.css                       # Global CSS styles including Tailwind
+│
+├── .gitignore                            # Git ignore file
+├── package.json                          # Project dependencies and scripts
+├── tailwind.config.js                    # Tailwind CSS configuration
+└── tsconfig.json                         # TypeScript configuration
+```
 
 ## License
 
