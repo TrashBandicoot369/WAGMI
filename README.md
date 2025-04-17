@@ -73,4 +73,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## License
 
+
+git add .
+git commit -m "Update: whatever you changed"
+git push
+
+
 MIT 

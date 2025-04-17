@@ -9,8 +9,6 @@ export function useCalls(): TokenData[] {
   const [calls, setCalls] = useState<TokenData[]>([])
 
   useEffect(() => {
-    if (!db) return
-    
     const q = query(collection(db, "calls"), orderBy("timestamp", "desc"))
     
     const unsubscribe = onSnapshot(q, (snapshot) => {

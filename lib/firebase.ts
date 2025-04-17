@@ -10,6 +10,5 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || "<your-app-id>"
 }
 
-// Initialize Firebase only on the client side and if it hasn't been initialized yet
-let app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
-export const db = typeof window !== 'undefined' ? getFirestore(app) : null 
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
+export const db = getFirestore(app) 
