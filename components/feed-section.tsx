@@ -3,6 +3,9 @@
 import { motion } from "framer-motion"
 import FeedCard from "./feed-card"
 import { useCalls } from "@/hooks/useCalls"
+import { db } from "@/lib/firebase"
+import { collection, getDocs } from "firebase/firestore"
+import { useEffect } from "react"
 
 interface FeedSectionProps {
   title?: string
@@ -14,6 +17,24 @@ export default function FeedSection({
   description = "Real-time calls from our expert team. Get in early, secure your gains.",
 }: FeedSectionProps) {
   const calls = useCalls()
+
+  useEffect(() => {
+    async function testFirebase() {
+      if (!db) {
+        console.log("🚨 Firestore not initialized")
+        return
+      }
+
+      try {
+        const snapshot = await getDocs(collection(db, "calls"))
+        console.log("📦 Calls fetched:", snapshot.docs.length)
+      } catch (error) {
+        console.error("Firebase error:", error)
+      }
+    }
+
+    testFirebase()
+  }, [])
 
   return (
     <section className="pt-16 pb-20 md:pt-24 md:pb-24 relative">
