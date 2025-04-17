@@ -3,7 +3,6 @@ import HeroSection from "@/components/hero-section"
 import FeedSection from "@/components/feed-section"
 import Footer from "@/components/footer"
 import BackgroundAnimation from "@/components/background-animation"
-import { sampleTokenData } from "@/lib/sample-data"
 
 export default function Home() {
   // Add a class to the main element to ensure proper positioning
@@ -16,7 +15,7 @@ export default function Home() {
         {/* Add padding-top to push content down and make room for the logo */}
         <div className="pt-20">
           <HeroSection />
-          <FeedSection tokenData={sampleTokenData} />
+          <FeedSection />
           <Footer />
         </div>
       </div>
