@@ -13,7 +13,7 @@ export default function FeedSection({
   title = "Latest Alpha Drops",
   description = "Real-time calls from our expert team. Get in early, secure your gains.",
 }: FeedSectionProps) {
-  const { calls, loading, error } = useCalls()
+  const { calls = [], loading, error } = useCalls()
 
   return (
     <section className="pt-16 pb-20 md:pt-24 md:pb-24 relative">
@@ -47,7 +47,7 @@ export default function FeedSection({
           </div>
         )}
 
-        {!loading && !error && (
+        {!loading && !error && calls && calls.length > 0 && (
           <div className="flex flex-wrap -mx-4">
             {calls.map((token, index) => (
               <motion.div
@@ -61,6 +61,12 @@ export default function FeedSection({
                 <FeedCard token={token} />
               </motion.div>
             ))}
+          </div>
+        )}
+
+        {!loading && !error && (!calls || calls.length === 0) && (
+          <div className="text-center py-10">
+            <p className="text-white/70">No calls available at the moment.</p>
           </div>
         )}
       </div>

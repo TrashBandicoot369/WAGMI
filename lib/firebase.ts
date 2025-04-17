@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app"
+import { initializeApp, getApps } from "firebase/app"
 import { getFirestore } from "firebase/firestore"
 
 const firebaseConfig = {
@@ -10,5 +10,6 @@ const firebaseConfig = {
   appId: "<your-app-id>"
 }
 
-const app = initializeApp(firebaseConfig)
-export const db = getFirestore(app) 
+// Initialize Firebase only on the client side and if it hasn't been initialized yet
+let app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0]
+export const db = typeof window !== 'undefined' ? getFirestore(app) : null 
