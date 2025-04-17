@@ -5,11 +5,16 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 
 interface DexButtonProps {
-  link: string
+  link?: string
   className?: string
 }
 
 export function DexButton({ link, className }: DexButtonProps) {
+  if (!link) {
+    console.warn("⚠️ DexButton link missing for call:", link)
+    return null
+  }
+
   return (
     <Link
       href={link}
