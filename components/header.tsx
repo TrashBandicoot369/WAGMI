@@ -24,37 +24,42 @@ export default function Header() {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center">
-          {/* Logo container with no background or borders */}
-          <div className="h-40 w-auto flex items-center">
-            {/* Position the logo to blend with the background */}
-            <div className="absolute left-0 top-0 h-40 overflow-visible">
-              <img src="/wagmi-logo.png" alt="WAGMI Logo" className="h-full object-contain object-left-top" />
-            </div>
-            {/* Spacer to maintain layout */}
-            <div className="w-40 h-40"></div>
-          </div>
+      <div className="container mx-auto px-4 py-4 flex flex-col items-center">
+        {/* Centered WAGMI logo at 3x size */}
+        <div className="w-full flex justify-center mb-2">
+          <img 
+            src="/wagmi.png" 
+            alt="WAGMI" 
+            className="h-auto w-auto transform scale-300"
+            style={{ maxWidth: '300px', transform: 'scale(3)', marginTop: '50px', marginBottom: '50px' }}
+          />
         </div>
-
-        <div className="hidden md:flex items-center space-x-6">
-          <Link href="#" className="text-white hover:text-green-400 transition-colors font-medium">
-            Home
-          </Link>
-          <Link href="#" className="text-white hover:text-green-400 transition-colors font-medium">
-            Calls
-          </Link>
-          <Link href="#" className="text-white hover:text-green-400 transition-colors font-medium">
-            About
-          </Link>
-          <div className="flex items-center space-x-4 ml-4">
-            <Link href="#" className="text-white hover:text-green-400 transition-colors">
-              <Twitter size={20} />
+        
+        {/* Navigation links below logo */}
+        <div className="w-full flex justify-between items-center mt-16 pt-4">
+          <div className="flex-1"></div> {/* Spacer */}
+          
+          <div className="hidden md:flex items-center space-x-6">
+            <Link href="#" className="text-white hover:text-green-400 transition-colors font-medium">
+              Home
             </Link>
-            <Link href="#" className="text-white hover:text-green-400 transition-colors">
-              <Telegram size={20} />
+            <Link href="#" className="text-white hover:text-green-400 transition-colors font-medium">
+              Calls
             </Link>
+            <Link href="#" className="text-white hover:text-green-400 transition-colors font-medium">
+              About
+            </Link>
+            <div className="flex items-center space-x-4 ml-4">
+              <Link href="#" className="text-white hover:text-green-400 transition-colors">
+                <Twitter size={20} />
+              </Link>
+              <Link href="#" className="text-white hover:text-green-400 transition-colors">
+                <Telegram size={20} />
+              </Link>
+            </div>
           </div>
+          
+          <div className="flex-1"></div> {/* Spacer */}
         </div>
       </div>
     </header>
