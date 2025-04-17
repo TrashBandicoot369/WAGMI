@@ -31,28 +31,27 @@ const fillerCalls: TokenData[] = [
 ]
 
 export function useCalls(): TokenData[] {
-  const [calls, setCalls] = useState<TokenData[]>(fillerCalls)
+  const [calls, setCalls] = useState<TokenData[]>([])
 
-  // Comment out Firebase integration for now
-  /*
   useEffect(() => {
     // Only run if db is available (client-side)
     if (!db) return
 
     const q = query(collection(db, "calls"), orderBy("timestamp", "desc"))
+
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const data = snapshot.docs.map((doc) => {
+        const docData = doc.data() as Omit<TokenData, 'id'>
         return {
           id: doc.id,
-          ...doc.data()
-        } as TokenData
+          ...docData
+        }
       })
       setCalls(data)
     })
 
     return () => unsubscribe()
   }, [])
-  */
 
   return calls
 } 
