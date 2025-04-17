@@ -2,30 +2,36 @@
 
 import { useEffect, useState } from "react"
 import { db } from "@/lib/firebase"
-import { collection, onSnapshot, query, orderBy } from "firebase/firestore"
+import { collection, getDocs } from "firebase/firestore"
 import { TokenData } from "@/types"
 
 export function useCalls(): TokenData[] {
   const [calls, setCalls] = useState<TokenData[]>([])
 
   useEffect(() => {
-    if (!db) return
+    async function fetchData() {
+      if (!db) {
+        console.error("🔥 Firestore not initialized")
+        return
+      }
 
-    const q = query(collection(db, "calls"), orderBy("timestamp", "desc"))
-    
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map((doc) => {
-        const docData = doc.data() as Omit<TokenData, 'id'>
-        return {
-          id: doc.id,
-          ...docData
-        }
-      })
-      console.log("🔥 Firestore snapshot:", data)
-      setCalls(data)
-    })
+      try {
+        const snapshot = await getDocs(collection(db, "calls"))
+        const data = snapshot.docs.map((doc) => {
+          const docData = doc.data() as Omit<TokenData, 'id'>
+          return {
+            id: doc.id,
+            ...docData
+          }
+        })
+        console.log("✅ Fetched Firestore docs:", data)
+        setCalls(data)
+      } catch (err) {
+        console.error("❌ Error fetching from Firestore:", err)
+      }
+    }
 
-    return () => unsubscribe()
+    fetchData()
   }, [])
 
   return calls
