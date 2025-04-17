@@ -40,3 +40,6 @@ next-env.d.ts
 
 # Backup files
 *.zip
+
+# Explicitly ignore environment file
+.env.local
