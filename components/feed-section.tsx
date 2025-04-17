@@ -13,11 +13,11 @@ export default function FeedSection({
   title = "Latest Alpha Drops",
   description = "Real-time calls from our expert team. Get in early, secure your gains.",
 }: FeedSectionProps) {
-  const { calls = [], loading, error } = useCalls()
+  const calls = useCalls()
 
   return (
     <section className="pt-16 pb-20 md:pt-24 md:pb-24 relative">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 pb-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -31,40 +31,21 @@ export default function FeedSection({
           <p className="text-white/70 max-w-2xl mx-auto">{description}</p>
         </motion.div>
 
-        {loading && (
-          <div className="flex justify-center py-20">
-            <div className="animate-pulse flex space-x-2">
-              <div className="h-3 w-3 bg-green-400 rounded-full"></div>
-              <div className="h-3 w-3 bg-green-400 rounded-full"></div>
-              <div className="h-3 w-3 bg-green-400 rounded-full"></div>
-            </div>
-          </div>
-        )}
-
-        {error && (
-          <div className="text-center py-10">
-            <p className="text-red-400">{error}</p>
-          </div>
-        )}
-
-        {!loading && !error && calls && calls.length > 0 && (
-          <div className="flex flex-wrap -mx-4">
-            {calls.map((token, index) => (
+        {calls && calls.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {calls.map((call) => (
               <motion.div
-                key={token.id}
+                key={call.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                transition={{ duration: 0.5 }}
                 viewport={{ once: true }}
-                className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] mb-6 px-2"
               >
-                <FeedCard token={token} />
+                <FeedCard {...call} />
               </motion.div>
             ))}
           </div>
-        )}
-
-        {!loading && !error && (!calls || calls.length === 0) && (
+        ) : (
           <div className="text-center py-10">
             <p className="text-white/70">No calls available at the moment.</p>
           </div>

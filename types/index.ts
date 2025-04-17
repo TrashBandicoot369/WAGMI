@@ -1,9 +1,12 @@
 // Define the token data interface
 export interface TokenData {
   id: string
-  tokenName: string
-  timestamp: string
-  dexLink: string
+  token: string
+  timestamp: any // or Date if you format on the fly
+  status: "LIVE" | "COMPLETED" | "NEW"
+  dexUrl: string
   isNew?: boolean
-  status?: "live" | "upcoming" | "completed"
+  groupName?: string
+  confidence?: number
+  chain?: string
 }
