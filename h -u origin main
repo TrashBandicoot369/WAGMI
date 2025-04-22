@@ -1,0 +1,5 @@
+[33mcommit c75749b0ac24624859474c8c837f58a080e453af[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Mitch Sweeney <mitchsweeney@gmail.com>
+Date:   Mon Apr 21 22:38:31 2025 -0400
+
+    Add low market cap token monitoring script that removes tokens below  for 20+ minutes
