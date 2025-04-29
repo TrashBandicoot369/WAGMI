@@ -13,7 +13,7 @@ export default function Home() {
       <div className="relative z-10">
         <Header />
         {/* Add padding-top to push content down and make room for the logo */}
-        <div className="pt-20">
+        <div className="pt-10">
           <HeroSection />
           <FeedSection />
           <Footer />

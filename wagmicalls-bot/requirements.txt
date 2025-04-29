@@ -1,0 +1,5 @@
+telethon
+firebase-admin
+aiohttp
+requests
+python-dotenv  # Optional, only if you use .env 

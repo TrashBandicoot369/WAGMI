@@ -12,6 +12,40 @@ body {
   }
 }
 
+/* Added custom marquee animation styles */
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+  width: max-content;
+  display: flex;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-25%); }
+}
+
+@keyframes scroll-loop {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+.marquee-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 2.5rem;
+}
+
+.marquee-track {
+  display: flex;
+  width: fit-content;
+  animation: scroll-loop 40s linear infinite;
+}
+
+.marquee-inner {
+  display: flex;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

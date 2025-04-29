@@ -1,82 +1,154 @@
-# WAGMI Crypto Dashboard
+# WAGMI Crypto Bots
 
-A modern, responsive cryptocurrency dashboard built with React, Next.js, and Tailwind CSS.
+This repository contains two Telegram bots for monitoring and processing crypto-related messages:
 
-## Features
-
-- Real-time cryptocurrency data visualization
-- Responsive design for all devices
-- Beautiful glassmorphism UI
-- Token feed with latest updates
-- Interactive charts and analytics
-
-## Tech Stack
-
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- Framer Motion for animations
-- Shadcn UI components
-
-## Getting Started
-
-```bash
-# Install dependencies
-npm install
-# or
-pnpm install
-
-# Run the development server
-npm run dev
-# or
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Qwant3 Bot**: Monitors and processes messages from Qwant3
+2. **WAGMI Calls Bot**: Monitors and processes WAGMI-related calls
 
 ## Project Structure
 
 ```
 /
-├── components/
-│   ├── feed-card.tsx                     # Card component for displaying token data
-│   ├── feed-section.tsx                  # Section that displays the grid of token cards
-│   └── ui/
-│       ├── StatusBadge.tsx               # Component for displaying status indicators
-│       └── DexButton.tsx                 # Button component for DEX links
+├── qwant3-bot/
+│   ├── qwant3.py
+│   ├── requirements.txt
+│   └── serviceAccountKey.json
 │
-├── hooks/
-│   └── useCalls.ts                       # Hook for fetching token call data
+├── wagmicalls-bot/
+│   ├── wagmicalls.py
+│   ├── requirements.txt
+│   └── serviceAccountKey.json
 │
-├── lib/
-│   ├── firebase.ts                       # Firebase configuration and initialization
-│   └── utils.ts                          # Utility functions including formatDate
+├── app/                      # Next.js app directory
+├── components/              # React components
+├── hooks/                   # Custom React hooks
+├── lib/                     # Utility libraries
+├── public/                  # Static assets
+├── scripts/                 # Utility scripts
+├── styles/                  # CSS styles
+├── types/                   # TypeScript type definitions
 │
-├── types/
-│   └── index.ts                          # TypeScript interfaces including TokenData
+├── Dockerfile              # Docker configuration
+├── docker-compose.yml      # Docker Compose configuration
+├── firestore.rules         # Firestore security rules
+├── next.config.mjs         # Next.js configuration
+├── package.json            # Node.js dependencies
+├── postcss.config.mjs      # PostCSS configuration
+├── tailwind.config.ts      # Tailwind CSS configuration
+├── tsconfig.json           # TypeScript configuration
 │
-├── public/                               # Static files
+├── *.py                    # Python utility scripts
+│   ├── add_admin_roles_directly.py
+│   ├── add_telegram_users.py
+│   ├── check_firebase.py
+│   ├── clear_firebase.py
+│   ├── clear_firestore_collections.py
+│   ├── clear_pump_cache.py
+│   ├── clear_random_tokens.py
+│   ├── delete_duplicate_tokens.py
+│   ├── deploy_firestore_rules.py
+│   ├── fix_invalid_timestamps.py
+│   ├── fix_token_database.py
+│   ├── fix_unknown_tokens.py
+│   ├── forward_calls.py
+│   ├── get_chat_ids.py
+│   ├── get_group_ids.py
+│   ├── get_user_ids.py
+│   ├── get_usernames.py
+│   ├── list_telegram_chats.py
+│   ├── manage_telegram_users.py
+│   ├── migrate_users_to_firestore.py
+│   ├── monitor_low_mcap_tokens.py
+│   ├── refresh_all_tokens.py
+│   ├── refresh_pending_tokens.py
+│   ├── refresh_unknowns.py
+│   ├── rick_monitor.py
+│   ├── sync_user_roles.py
+│   ├── telegram_forward.py
+│   └── watchdog.py
 │
-├── pages/
-│   ├── _app.tsx                          # Next.js app wrapper
-│   └── index.tsx                         # Main landing page
+├── *.log                   # Log files
+│   ├── rick_monitor.log
+│   ├── wagmi_calls.log
+│   └── wagmi_calls_detailed.log
 │
-├── styles/
-│   └── globals.css                       # Global CSS styles including Tailwind
+├── *.session              # Telegram session files
+│   ├── user_session.session
+│   ├── user_session1.session
+│   └── user_session2.session
 │
-├── .gitignore                            # Git ignore file
-├── package.json                          # Project dependencies and scripts
-├── tailwind.config.js                    # Tailwind CSS configuration
-└── tsconfig.json                         # TypeScript configuration
+├── *.md                   # Documentation
+│   ├── ADMIN_PANEL_README.md
+│   ├── README_low_mcap_monitor.md
+│   ├── TELEGRAM_ID_LOOKUP_README.md
+│   └── TELEGRAM_USERS_README.md
+│
+└── .gitignore            # Git ignore rules
 ```
 
-## License
+## Features
 
+### Qwant3 Bot
+- Monitors specific Telegram groups for Qwant3 messages
+- Parses token data from messages
+- Stores parsed data in Firestore
+- Prevents duplicate entries
+- Comprehensive logging
 
-git add .
-git commit -m "Remove service account key and add to gitignore"
-git push
+### WAGMI Calls Bot
+- Monitors WAGMI-related calls
+- Processes and stores call data
+- Integrates with Firebase for data persistence
+- Comprehensive logging
 
+## Requirements
 
-MIT 
+- Python 3.8+
+- Telethon
+- Firebase Admin SDK
+- Telegram API credentials
+- aiohttp
+- requests
+- python-dotenv (optional, for local development)
+
+## Setup
+
+1. Install dependencies for each bot:
+   ```
+   cd qwant3-bot
+   pip install -r requirements.txt
+   
+   cd ../wagmicalls-bot
+   pip install -r requirements.txt
+   ```
+
+2. Make sure you have the Firebase service account key file (`serviceAccountKey.json`) in each bot's directory.
+
+3. Run the bots:
+   ```
+   # For Qwant3 bot
+   cd qwant3-bot
+   python qwant3.py
+   
+   # For WAGMI Calls bot
+   cd wagmicalls-bot
+   python wagmicalls.py
+   ```
+
+## Configuration
+
+Each bot uses the following environment variables which can be set in Railway dashboard:
+
+- `API_ID` and `API_HASH`: Your Telegram API credentials
+- `SESSION`: Telethon session name
+- `SOURCE_GROUPS`: List of Telegram group IDs to monitor
+
+## Logging
+
+Each bot outputs logs to both the console and a dedicated log file:
+- Qwant3 bot: `qwant3.log`
+- WAGMI Calls bot: `wagmicalls.log`
+
+## Deployment
+
+Both bots are designed to be deployed on Railway. Each bot has its own directory with all necessary files for deployment.

@@ -1,0 +1,17 @@
+[Unit]
+Description=Rick Burp Bot Monitor for WAGMI
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /path/to/rick_monitor.py
+WorkingDirectory=/path/to
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=rick_monitor
+User=your_username
+Group=your_group
+
+[Install]
+WantedBy=multi-user.target 

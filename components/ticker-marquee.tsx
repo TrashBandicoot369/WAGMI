@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { collection, query, orderBy, limit, onSnapshot } from "firebase/firestore"
 import { TokenData } from "@/types"
 import { getFirebaseDb } from "@/lib/firebase-unified"
@@ -8,6 +8,8 @@ import { getFirebaseDb } from "@/lib/firebase-unified"
 export default function TickerMarquee() {
   const [topGainers, setTopGainers] = useState<{ symbol: string; gain: number; dexUrl: string }[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const [contentWidth, setContentWidth] = useState(0)
 
   useEffect(() => {
     const db = getFirebaseDb();
@@ -34,7 +36,7 @@ export default function TickerMarquee() {
     const q = query(
       collection(db, "calls"),
       orderBy("timestamp", "desc"),
-      limit(50) // Get more tokens to filter for those with gain data
+      limit(100) // Get more tokens to filter for those with gain data
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -68,7 +70,7 @@ export default function TickerMarquee() {
           dexUrl: data.dexUrl 
         }))
         .sort((a, b) => b.gain - a.gain) // Sort by highest gain first
-        .slice(0, 15); // Take top 15 gainers
+        .slice(0, 20); // Take top 20 gainers
       
       setTopGainers(tokensWithGains);
       setIsLoading(false);
@@ -77,33 +79,34 @@ export default function TickerMarquee() {
     return () => unsubscribe();
   }, []);
 
+  // Measure the width of the content for pixel-perfect animation
+  useEffect(() => {
+    if (contentRef.current) {
+      setContentWidth(contentRef.current.offsetWidth);
+    }
+  }, [topGainers]);
+
+  const scrollingItems = Array(4).fill(topGainers).flat();
+
   if (isLoading || topGainers.length === 0) {
     return <div className="h-8"></div>;
   }
 
-  // Double the items to create seamless loop
-  const tickerItems = [...topGainers, ...topGainers];
-
   return (
-    <div className="w-full overflow-hidden py-1.5">
-      <div className="animate-marquee inline-block whitespace-nowrap">
-        {tickerItems.map((token, index) => (
-          <a 
-            key={index} 
-            href={token.dexUrl} 
-            target="_blank" 
+    <div className="overflow-hidden w-full">
+      <div className="flex whitespace-nowrap animate-marquee">
+        {scrollingItems.map((token, index) => (
+          <a
+            key={index}
+            href={token.dexUrl}
+            target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center mx-4 hover:opacity-80 transition-opacity cursor-pointer"
-            onClick={(e) => {
-              if (!token.dexUrl) {
-                e.preventDefault();
-              }
-            }}
+            className="flex items-center gap-2 px-4"
           >
-            <span className="font-bold text-white">${token.symbol}</span>
-            <span className="ml-1 text-green-400 font-medium">+{token.gain}%</span>
+            <span className="text-white font-bold">${token.symbol}</span>
+            <span className="text-green-400 font-medium">+{token.gain}%</span>
             {token.gain >= 100 && (
-              <span className="ml-1 px-1.5 py-0.5 bg-green-500/30 text-green-300 text-xs font-bold rounded-full">
+              <span className="text-green-300 text-xs font-bold px-2 py-0.5 bg-green-500/30 rounded-full">
                 {Math.round(token.gain / 100 + 1)}x
               </span>
             )}

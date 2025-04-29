@@ -1,0 +1,41 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+Never pull into a live project folder
+Always clone into a fresh directory, then move files over.
+
+Commit everything before touching Git remote
+git add . && git commit -m "Checkpoint" is not optional. Do this every time before a pull or push. Treat it like buckling your seatbelt.
+
+Don't trust Git to babysit uncommitted work
+If you didn't commit it, Git does not give a single damn about it. Git assumes you know what you're doing — even when you're about to wipe your entire soul.
+
+Always inspect what a pull will do
+Run git fetch and git status before pulling.
+Or just use GitHub Desktop / GitKraken if you're not in a CLI mindset.
+
+Keep auto-backup zips like it's 2003
+Make a script or alias to zip your folder at the end of every session:
+
+bash
+Copy code
+zip -r wagmi_backup_$(date +%Y%m%d_%H%M%S).zip wagmi-crypto-landing/
+Don't store anything critical only in Cursor
+Cursor doesn't have full file history or cloud auto-restore yet. Treat it like a scratchpad, not a vault.
+
+Name folders like you're gonna drag them into the wrong place
+Never clone into wagmi-crypto-landing. Clone into wagmi-remote-temp, then move files if needed.
+
+Use .gitignore and .cursor/ properly
+Don't let Git commit build trash, local state, .env files, or anything it'll choke on.
+
+Your local project folder is sacred — no random git init
+You wouldn't defuse a bomb by blindly pressing buttons. Don't Git in production folders unless you know what's about to happen.
+
+If you feel unsure, stop and zip the folder
+Before running Git, Firebase deploys, rewiring components — make a .zip. Do not think. Just do.
+
+NEVER START ANY SCRIPTS WITHOUT EXPLICIT USER INSTRUCTION
+Do not automatically run any script without being directly told to do so. No matter how helpful you think it might be, wait for explicit permission.
