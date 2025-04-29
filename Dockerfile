@@ -9,7 +9,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application files
 COPY rick_monitor.py .
 COPY firebase_admin_setup.py .
-COPY wagmi-crypto-calls-firebase-adminsdk-fbsvc-88527b62f1.json .
 
 # Railway does not allow VOLUME, so we skip that
 # If your app needs sessions, use a file-based fallback or /tmp
